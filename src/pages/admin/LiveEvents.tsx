@@ -41,10 +41,10 @@ const LiveEvents = () => {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
           <div className="flex items-center gap-2">
             <Heart className="w-5 h-5 text-primary fill-primary" />
-            <h1 className="text-xl font-serif font-bold text-foreground">Live Events</h1>
+            <h1 className="text-xl font-serif font-bold text-foreground text-center">Sarathi Art Studio</h1>
           </div>
           <Button onClick={() => navigate('/admin/events/new')}>
             <Plus className="w-4 h-4 mr-2" /> New Event
