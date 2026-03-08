@@ -130,63 +130,58 @@ const LiveEventPage = () => {
           </motion.div>
         )}
 
-        {/* YouTube Embed with Side Images */}
-        {isLive && embedUrl && (
+        {/* YouTube Embed / Placeholder with Side Images */}
+        {embedUrl && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className={`flex flex-col ${hasSideImages ? 'lg:flex-row' : ''} items-center gap-4 lg:gap-6`}
+            className={`flex flex-col ${hasSideImages ? 'lg:flex-row' : ''} items-stretch gap-4 lg:gap-6`}
           >
             {/* Left Image */}
             {hasLeftImage && (
-              <div className="w-full lg:w-[22%] flex-shrink-0 order-2 lg:order-1">
+              <div className="w-full lg:w-[20%] flex-shrink-0 order-2 lg:order-1">
                 <img
                   src={event.left_image_url}
                   alt="Left side"
-                  className="w-full h-auto max-h-[300px] lg:max-h-none lg:h-full object-cover rounded-xl shadow-md border border-border"
+                  className="w-full h-full object-cover rounded-xl shadow-md border border-border"
                 />
               </div>
             )}
 
-            {/* YouTube Player */}
+            {/* Center: Player or Placeholder */}
             <div className={`w-full ${hasSideImages ? 'lg:flex-1' : 'max-w-4xl mx-auto'} order-1 lg:order-2`}>
-              <div className="aspect-video rounded-xl overflow-hidden border border-border shadow-lg">
-                <iframe
-                  src={embedUrl}
-                  title={event.couple_name}
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
+              {isLive ? (
+                <div className="aspect-video rounded-xl overflow-hidden border border-border shadow-lg">
+                  <iframe
+                    src={embedUrl}
+                    title={event.couple_name}
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              ) : (
+                <div className="aspect-video rounded-xl overflow-hidden border border-border bg-card flex items-center justify-center">
+                  <div className="text-center space-y-3 p-8">
+                    <Heart className="w-12 h-12 text-primary/30 mx-auto" />
+                    <p className="font-serif text-lg text-foreground">The stream will appear here when the event goes live</p>
+                    <p className="text-sm text-muted-foreground">Please check back at the scheduled time</p>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Right Image */}
             {hasRightImage && (
-              <div className="w-full lg:w-[22%] flex-shrink-0 order-3">
+              <div className="w-full lg:w-[20%] flex-shrink-0 order-3">
                 <img
                   src={event.right_image_url}
                   alt="Right side"
-                  className="w-full h-auto max-h-[300px] lg:max-h-none lg:h-full object-cover rounded-xl shadow-md border border-border"
+                  className="w-full h-full object-cover rounded-xl shadow-md border border-border"
                 />
               </div>
             )}
-          </motion.div>
-        )}
-
-        {!isLive && embedUrl && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="aspect-video rounded-xl overflow-hidden border border-border bg-card flex items-center justify-center max-w-4xl mx-auto"
-          >
-            <div className="text-center space-y-3 p-8">
-              <Heart className="w-12 h-12 text-primary/30 mx-auto" />
-              <p className="font-serif text-lg text-foreground">The stream will appear here when the event goes live</p>
-              <p className="text-sm text-muted-foreground">Please check back at the scheduled time</p>
-            </div>
           </motion.div>
         )}
 
