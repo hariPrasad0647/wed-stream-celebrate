@@ -41,11 +41,14 @@ export function createEvent(data: {
   youtube_url: string;
   password_protected: boolean;
   password?: string;
+  left_image_url?: string;
+  right_image_url?: string;
+  photographer_name?: string;
+  photographer_phone?: string;
 }): WeddingEvent {
   const events = getEvents();
   let slug = generateSlug(data.couple_name);
   
-  // Ensure unique slug
   const existingSlugs = events.map(e => e.slug);
   let counter = 1;
   let finalSlug = slug;
@@ -64,6 +67,10 @@ export function createEvent(data: {
     status: computeStatus(data.event_date),
     password_protected: data.password_protected,
     password: data.password,
+    left_image_url: data.left_image_url || undefined,
+    right_image_url: data.right_image_url || undefined,
+    photographer_name: data.photographer_name || undefined,
+    photographer_phone: data.photographer_phone || undefined,
     created_at: new Date().toISOString(),
   };
 

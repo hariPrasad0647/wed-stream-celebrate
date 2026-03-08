@@ -5,7 +5,7 @@ import { getEmbedUrl } from '@/lib/youtube';
 import { WeddingEvent } from '@/types/event';
 import CountdownTimer from '@/components/CountdownTimer';
 import { format } from 'date-fns';
-import { Calendar, Copy, Check, Heart } from 'lucide-react';
+import { Calendar, Copy, Check, Heart, Camera, Phone } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 
@@ -63,6 +63,10 @@ const LiveEventPage = () => {
   }
 
   const embedUrl = getEmbedUrl(event.youtube_url);
+  const hasLeftImage = !!event.left_image_url;
+  const hasRightImage = !!event.right_image_url;
+  const hasSideImages = hasLeftImage || hasRightImage;
+  const hasPhotographer = !!event.photographer_name;
 
   return (
     <div className="min-h-screen bg-background">
@@ -101,7 +105,7 @@ const LiveEventPage = () => {
       </div>
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-4 py-8 sm:py-12 space-y-10">
+      <div className="max-w-6xl mx-auto px-4 py-8 sm:py-12 space-y-10">
         {/* Countdown or Live badge */}
         {!isLive ? (
           <motion.div
@@ -126,21 +130,48 @@ const LiveEventPage = () => {
           </motion.div>
         )}
 
-        {/* YouTube Embed */}
+        {/* YouTube Embed with Side Images */}
         {isLive && embedUrl && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="aspect-video rounded-xl overflow-hidden border border-border shadow-lg"
+            className={`flex flex-col ${hasSideImages ? 'lg:flex-row' : ''} items-center gap-4 lg:gap-6`}
           >
-            <iframe
-              src={embedUrl}
-              title={event.couple_name}
-              className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+            {/* Left Image */}
+            {hasLeftImage && (
+              <div className="w-full lg:w-[22%] flex-shrink-0 order-2 lg:order-1">
+                <img
+                  src={event.left_image_url}
+                  alt="Left side"
+                  className="w-full h-auto max-h-[300px] lg:max-h-none lg:h-full object-cover rounded-xl shadow-md border border-border"
+                />
+              </div>
+            )}
+
+            {/* YouTube Player */}
+            <div className={`w-full ${hasSideImages ? 'lg:flex-1' : 'max-w-4xl mx-auto'} order-1 lg:order-2`}>
+              <div className="aspect-video rounded-xl overflow-hidden border border-border shadow-lg">
+                <iframe
+                  src={embedUrl}
+                  title={event.couple_name}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+
+            {/* Right Image */}
+            {hasRightImage && (
+              <div className="w-full lg:w-[22%] flex-shrink-0 order-3">
+                <img
+                  src={event.right_image_url}
+                  alt="Right side"
+                  className="w-full h-auto max-h-[300px] lg:max-h-none lg:h-full object-cover rounded-xl shadow-md border border-border"
+                />
+              </div>
+            )}
           </motion.div>
         )}
 
@@ -149,7 +180,7 @@ const LiveEventPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="aspect-video rounded-xl overflow-hidden border border-border bg-card flex items-center justify-center"
+            className="aspect-video rounded-xl overflow-hidden border border-border bg-card flex items-center justify-center max-w-4xl mx-auto"
           >
             <div className="text-center space-y-3 p-8">
               <Heart className="w-12 h-12 text-primary/30 mx-auto" />
@@ -170,8 +201,26 @@ const LiveEventPage = () => {
           </button>
         </div>
 
+        {/* Photographer Footer */}
+        {hasPhotographer && (
+          <div className="text-center pt-8 border-t border-border space-y-2">
+            <div className="flex items-center justify-center gap-2 text-muted-foreground">
+              <Camera className="w-4 h-4 text-primary/60" />
+              <p className="text-sm font-sans">
+                Photography by <span className="font-medium text-foreground">{event.photographer_name}</span>
+              </p>
+            </div>
+            {event.photographer_phone && (
+              <div className="flex items-center justify-center gap-2 text-muted-foreground">
+                <Phone className="w-3.5 h-3.5 text-primary/60" />
+                <p className="text-sm font-sans">{event.photographer_phone}</p>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Footer */}
-        <div className="text-center pt-8 border-t border-border">
+        <div className={`text-center ${hasPhotographer ? 'pt-4' : 'pt-8 border-t border-border'}`}>
           <Heart className="w-4 h-4 text-primary/40 mx-auto mb-2" />
           <p className="text-xs text-muted-foreground font-sans">
             Made with love

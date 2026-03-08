@@ -8,6 +8,10 @@ export interface WeddingEvent {
   status: 'upcoming' | 'live' | 'completed';
   password_protected: boolean;
   password?: string;
+  left_image_url?: string;
+  right_image_url?: string;
+  photographer_name?: string;
+  photographer_phone?: string;
   created_at: string;
 }
 
