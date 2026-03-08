@@ -104,9 +104,8 @@ const LiveEventPage = () => {
         </motion.div>
       </div>
 
-      {/* Content */}
+      {/* Countdown / Live badge */}
       <div className="max-w-6xl mx-auto px-4 py-8 sm:py-12 space-y-10">
-        {/* Countdown or Live badge */}
         {!isLive ? (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -129,15 +128,17 @@ const LiveEventPage = () => {
             </span>
           </motion.div>
         )}
+      </div>
 
-        {/* YouTube Embed / Placeholder with Side Images */}
-        {embedUrl && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className={`flex flex-col ${hasSideImages ? 'lg:flex-row' : ''} items-stretch gap-0 lg:gap-0`}
-          >
+      {/* YouTube Embed / Placeholder with Side Images — FULL WIDTH */}
+      {embedUrl && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className={`w-full px-4 sm:px-6 lg:px-8 ${hasSideImages ? '' : 'max-w-6xl mx-auto'}`}
+        >
+          <div className={`flex flex-col ${hasSideImages ? 'lg:flex-row' : ''} items-stretch gap-4 lg:gap-0`}>
             {/* Left Image */}
             {hasLeftImage && (
               <div className="w-full lg:w-[20%] flex-shrink-0 order-1 lg:order-1">
@@ -150,7 +151,7 @@ const LiveEventPage = () => {
             )}
 
             {/* Center: Player or Placeholder */}
-            <div className={`w-full ${hasSideImages ? 'lg:flex-1 lg:px-4' : 'max-w-4xl mx-auto'} order-2 lg:order-2`}>
+            <div className={`w-full ${hasSideImages ? 'lg:flex-1 lg:px-4' : ''} order-2 lg:order-2`}>
               {isLive ? (
                 <div className="aspect-video rounded-xl overflow-hidden border border-border shadow-lg">
                   <iframe
@@ -182,9 +183,12 @@ const LiveEventPage = () => {
                 />
               </div>
             )}
-          </motion.div>
-        )}
+          </div>
+        </motion.div>
+      )}
 
+      {/* Rest of content */}
+      <div className="max-w-6xl mx-auto px-4 py-8 space-y-10">
         {/* Share */}
         <div className="flex justify-center">
           <button
