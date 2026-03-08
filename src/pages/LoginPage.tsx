@@ -5,8 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { supabase } from '@/integrations/supabase/client';
-import { toast } from 'sonner';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -16,34 +14,14 @@ const LoginPage = () => {
   const [displayName, setDisplayName] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
-    if (isSignUp) {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: window.location.origin,
-          data: { display_name: displayName },
-        },
-      });
-      if (error) {
-        toast.error(error.message);
-      } else {
-        toast.success('Check your email to confirm your account');
-      }
-    } else {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) {
-        toast.error(error.message);
-      } else {
-        navigate('/admin');
-      }
-    }
-
-    setLoading(false);
+    // TODO: wire up your own authentication logic here
+    setTimeout(() => {
+      setLoading(false);
+      navigate('/admin');
+    }, 500);
   };
 
   return (
