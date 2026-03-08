@@ -201,22 +201,30 @@ const LiveEventPage = () => {
           </button>
         </div>
 
-        {/* Photographer Footer */}
+        {/* Photographer Card */}
         {hasPhotographer && (
-          <div className="text-center pt-8 border-t border-border space-y-2">
-            <div className="flex items-center justify-center gap-2 text-muted-foreground">
-              <Camera className="w-4 h-4 text-primary/60" />
-              <p className="text-sm font-sans">
-                Photography by <span className="font-medium text-foreground">{event.photographer_name}</span>
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="pt-8 border-t border-border flex justify-center"
+          >
+            <div className="bg-card border border-border rounded-2xl shadow-md px-8 py-6 text-center max-w-sm w-full space-y-3">
+              <Camera className="w-6 h-6 text-primary/50 mx-auto" />
+              <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground font-sans">
+                Photography by
               </p>
+              <p className="text-lg font-serif font-semibold text-foreground tracking-wide">
+                {event.photographer_name}
+              </p>
+              {event.photographer_phone && (
+                <div className="flex items-center justify-center gap-2 text-muted-foreground pt-1">
+                  <Phone className="w-3.5 h-3.5 text-primary/60" />
+                  <p className="text-sm font-sans">{event.photographer_phone}</p>
+                </div>
+              )}
             </div>
-            {event.photographer_phone && (
-              <div className="flex items-center justify-center gap-2 text-muted-foreground">
-                <Phone className="w-3.5 h-3.5 text-primary/60" />
-                <p className="text-sm font-sans">{event.photographer_phone}</p>
-              </div>
-            )}
-          </div>
+          </motion.div>
         )}
 
         {/* Footer */}
