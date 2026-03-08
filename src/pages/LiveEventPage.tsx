@@ -136,11 +136,11 @@ const LiveEventPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className={`flex flex-col ${hasSideImages ? 'lg:flex-row' : ''} items-stretch gap-4 lg:gap-6`}
+            className={`flex flex-col ${hasSideImages ? 'lg:flex-row' : ''} items-stretch gap-0 lg:gap-0`}
           >
             {/* Left Image */}
             {hasLeftImage && (
-              <div className="w-full lg:w-[20%] flex-shrink-0 order-2 lg:order-1">
+              <div className="w-full lg:w-[20%] flex-shrink-0 order-1 lg:order-1">
                 <img
                   src={event.left_image_url}
                   alt="Left side"
@@ -150,7 +150,7 @@ const LiveEventPage = () => {
             )}
 
             {/* Center: Player or Placeholder */}
-            <div className={`w-full ${hasSideImages ? 'lg:flex-1' : 'max-w-4xl mx-auto'} order-1 lg:order-2`}>
+            <div className={`w-full ${hasSideImages ? 'lg:flex-1 lg:px-4' : 'max-w-4xl mx-auto'} order-2 lg:order-2`}>
               {isLive ? (
                 <div className="aspect-video rounded-xl overflow-hidden border border-border shadow-lg">
                   <iframe
