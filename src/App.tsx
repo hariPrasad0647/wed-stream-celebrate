@@ -24,9 +24,9 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/admin" element={<ProtectedRoute><LiveEvents /></ProtectedRoute>} />
-            <Route path="/admin/events/new" element={<ProtectedRoute><EventForm /></ProtectedRoute>} />
-            <Route path="/admin/events/:id/edit" element={<ProtectedRoute><EventForm /></ProtectedRoute>} />
+            <Route path="/admin" element={<LiveEvents />} />
+            <Route path="/admin/events/new" element={<EventForm />} />
+            <Route path="/admin/events/:id/edit" element={<EventForm />} />
             <Route path="/live/:slug" element={<LiveEventPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
