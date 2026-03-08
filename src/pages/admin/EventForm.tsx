@@ -21,6 +21,10 @@ const EventForm = () => {
     youtube_url: '',
     password_protected: false,
     password: '',
+    left_image_url: '',
+    right_image_url: '',
+    photographer_name: '',
+    photographer_phone: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -35,6 +39,10 @@ const EventForm = () => {
           youtube_url: event.youtube_url,
           password_protected: event.password_protected,
           password: event.password || '',
+          left_image_url: event.left_image_url || '',
+          right_image_url: event.right_image_url || '',
+          photographer_name: event.photographer_name || '',
+          photographer_phone: event.photographer_phone || '',
         });
       }
     }
@@ -136,6 +144,60 @@ const EventForm = () => {
               onChange={e => update('youtube_url', e.target.value)}
             />
             {errors.youtube_url && <p className="text-xs text-destructive">{errors.youtube_url}</p>}
+          </div>
+
+          {/* Side Images */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="left_image_url">Left Side Image URL <span className="text-muted-foreground text-xs">(optional)</span></Label>
+              <Input
+                id="left_image_url"
+                placeholder="https://example.com/left.jpg"
+                value={form.left_image_url}
+                onChange={e => update('left_image_url', e.target.value)}
+              />
+              {form.left_image_url && (
+                <div className="mt-1 rounded-lg overflow-hidden border border-border h-24">
+                  <img src={form.left_image_url} alt="Left preview" className="w-full h-full object-cover" />
+                </div>
+              )}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="right_image_url">Right Side Image URL <span className="text-muted-foreground text-xs">(optional)</span></Label>
+              <Input
+                id="right_image_url"
+                placeholder="https://example.com/right.jpg"
+                value={form.right_image_url}
+                onChange={e => update('right_image_url', e.target.value)}
+              />
+              {form.right_image_url && (
+                <div className="mt-1 rounded-lg overflow-hidden border border-border h-24">
+                  <img src={form.right_image_url} alt="Right preview" className="w-full h-full object-cover" />
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Photographer Details */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="photographer_name">Photographer Name <span className="text-muted-foreground text-xs">(optional)</span></Label>
+              <Input
+                id="photographer_name"
+                placeholder="e.g., Raj Studio"
+                value={form.photographer_name}
+                onChange={e => update('photographer_name', e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="photographer_phone">Photographer Phone <span className="text-muted-foreground text-xs">(optional)</span></Label>
+              <Input
+                id="photographer_phone"
+                placeholder="e.g., +91 98765 43210"
+                value={form.photographer_phone}
+                onChange={e => update('photographer_phone', e.target.value)}
+              />
+            </div>
           </div>
 
           <div className="flex items-center justify-between rounded-lg border border-border p-4">
